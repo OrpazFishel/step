@@ -29,3 +29,31 @@ function addRandomFact() {
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
 }
+
+/**
+ * Generates a URL for a random image in the images directory and adds an img
+ * element with that URL to the page.
+ */
+function randomizeImage() {
+  // The images directory contains 6 images, so generate a random index between
+  // 1 and 6.
+  const imageIndex = Math.floor(Math.random() * 6);
+  const images =
+      ["/images/assassin'sApprentice.jpg", 
+      "/images/elantris.jpg",
+      "/images/gameOfThrones.jpg",
+      "/images/graceling.jpg",
+      "/images/theNameOfTheWind.jpg",
+      "/images/theWayOfKings.jpg"];
+      
+  const imgUrl = images[imageIndex];
+
+  const imgElement = document.createElement('img');
+  imgElement.src = imgUrl;
+
+  const imageContainer = document.getElementById('random-image-container');
+  // Remove the previous image.
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(imgElement);
+}
+

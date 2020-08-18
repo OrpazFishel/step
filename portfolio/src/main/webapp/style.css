@@ -13,3 +13,13 @@ h1 {
 #fact-container {
   margin-top: 20px;
 }
+
+img {
+  margin: 10px;
+  max-height: 400px;
+  max-width: 400px;
+}
+
+#random-image-container img {
+  margin-top: 20px;
+}
