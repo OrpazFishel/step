@@ -20,7 +20,7 @@ function addRandomFact() {
       ["I'm one of a triplet - and we are all females",
       "My big brothers are twins",
       "The names of my entire family start with 'א'",
-       'I have played handball for 8 years, 13 games seasons'];
+      "I have played handball for 8 years, 13 games seasons"];
 
   // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
@@ -35,9 +35,6 @@ function addRandomFact() {
  * element with that URL to the page.
  */
 function randomizeImage() {
-  // The images directory contains 6 images, so generate a random index between
-  // 1 and 6.
-  const imageIndex = Math.floor(Math.random() * 6);
   const images =
       ["/images/assassin'sApprentice.jpg", 
       "/images/elantris.jpg",
@@ -45,7 +42,8 @@ function randomizeImage() {
       "/images/graceling.jpg",
       "/images/theNameOfTheWind.jpg",
       "/images/theWayOfKings.jpg"];
-      
+
+  const imageIndex = Math.floor(Math.random() * images.length); 
   const imgUrl = images[imageIndex];
 
   const imgElement = document.createElement('img');
