@@ -13,16 +13,45 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact about myself to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomFact() {
+  const facts =
+      ["I'm one of a triplet - and we are all females",
+      "My big brothers are twins",
+      "The names of my entire family start with 'א'",
+      "I have played handball for 8 years, 13 games seasons"];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Pick a random fact.
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = fact;
 }
+
+/**
+ * Generates a URL for a random image in the images directory and adds an img
+ * element with that URL to the page.
+ */
+function randomizeImage() {
+  const images =
+      ["/images/assassin'sApprentice.jpg", 
+      "/images/elantris.jpg",
+      "/images/gameOfThrones.jpg",
+      "/images/graceling.jpg",
+      "/images/theNameOfTheWind.jpg",
+      "/images/theWayOfKings.jpg"];
+
+  const imageIndex = Math.floor(Math.random() * images.length); 
+  const imgUrl = images[imageIndex];
+
+  const imgElement = document.createElement('img');
+  imgElement.src = imgUrl;
+
+  const imageContainer = document.getElementById('random-image-container');
+  // Remove the previous image.
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(imgElement);
+}
+
