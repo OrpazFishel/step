@@ -15,27 +15,12 @@
 /**
  * Adds a random fact about myself to the page.
  */
-function addRandomFact() {
-  const facts =
-      ["I'm one of a triplet - and we are all females",
-      "My big brothers are twins",
-      "The names of my entire family start with 'א'",
-      "I have played handball for 8 years, 13 games seasons"];
-
-  // Pick a random fact.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
-
-  // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fact;
-}
 
 function getRandomFact() {
     fetch('/data').then(response => response.text()).then((quote) => {
     document.getElementById('fact-container').innerText = quote;
   });
 }
-
 
 /**
  * Generates a URL for a random image in the images directory and adds an img
@@ -61,4 +46,3 @@ function randomizeImage() {
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
 }
-
