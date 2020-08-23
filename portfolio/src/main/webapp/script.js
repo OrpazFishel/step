@@ -30,6 +30,13 @@ function addRandomFact() {
   factContainer.innerText = fact;
 }
 
+function getRandomFact() {
+    fetch('/data').then(response => response.text()).then((quote) => {
+    document.getElementById('fact-container').innerText = quote;
+  });
+}
+
+
 /**
  * Generates a URL for a random image in the images directory and adds an img
  * element with that URL to the page.
