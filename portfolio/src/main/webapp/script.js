@@ -46,3 +46,18 @@ function randomizeImage() {
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
 }
+
+function getRandomComment() {
+    comments = fetch('/comment').then(response => response.json()).then((comments) => {
+        for(index = 0; index < comments.length; index++) {
+            const commentElement = document.getElementById("comment-container");
+            commentElement.appendChild(createListElement(comments[index]));
+        }
+    });
+}
+
+function createListElement(comment) {
+  const liElement = document.createElement('li');
+  liElement.innerText = comment;
+  return liElement;
+}
