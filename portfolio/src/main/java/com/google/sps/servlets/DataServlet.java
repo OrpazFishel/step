@@ -21,6 +21,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.common.collect.ImmutableList; 
+import java.util.*; 
 
 /** Servlet that returns some example content. */
 @WebServlet("/data")
@@ -29,19 +31,18 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void init() {
-      facts = new ArrayList<>();
-
-      facts.add("I'm one of a triplet - and we are all females");
-      facts.add("My big brothers are twins");
-      facts.add("The names of my entire family start with 'א'");
-      facts.add("I have played handball for 8 years, 13 games seasons");
+      /*Hard-coded list of facts*/
+      facts = ImmutableList.of("I'm one of a triplet - and we are all females",
+                               "My big brothers are twins",
+                               "The names of my entire family start with 'א'",
+                               "I have played handball for 8 years, 13 games seasons");
  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String fact = facts.get((int) (Math.random() * facts.size()));
 
-    response.setContentType("text/html; charset=UTF-8");
+    response.setContentType("text/plain; charset=UTF-8");
     response.getWriter().println(fact);
   }
 }

@@ -30,8 +30,8 @@ public class CommentServlet extends HttpServlet {
 
   @Override
   public void init() {
+      /*Hard-coded for this step only*/
       comments = new ArrayList<>();
-
       comments.add("You are the best!");
       comments.add("Hello Orpaz");
       comments.add("Have a nice day");
