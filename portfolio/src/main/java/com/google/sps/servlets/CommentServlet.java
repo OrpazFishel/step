@@ -26,16 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that handle comments data. */
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
-  private List<String> comments;
-
-  @Override
-  public void init() {
-      /*Hard-coded for this step only*/
-      comments = new ArrayList<>();
-      comments.add("You are the best!");
-      comments.add("Hello Orpaz");
-      comments.add("Have a nice day");
- }
+  private List<String> comments = new ArrayList<>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,5 +35,29 @@ public class CommentServlet extends HttpServlet {
 
         response.setContentType("application/json;");
         response.getWriter().println(jsonComment);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String name = getParameter(request, "name", "");
+    String comment = getParameter(request, "comment", "");
+
+    // Respond with the result.
+    comments.add(name + ":\n" + comment);
+    // Redirect back to the HTML page.
+    response.sendRedirect("/comments.html");
+  }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
