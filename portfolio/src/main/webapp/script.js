@@ -15,19 +15,10 @@
 /**
  * Adds a random fact about myself to the page.
  */
-function addRandomFact() {
-  const facts =
-      ["I'm one of a triplet - and we are all females",
-      "My big brothers are twins",
-      "The names of my entire family start with 'א'",
-      "I have played handball for 8 years, 13 games seasons"];
-
-  // Pick a random fact.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
-
-  // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fact;
+function getRandomFact() {
+    fetch('/data').then(response => response.text()).then((quote) => {
+    document.getElementById('fact-container').innerText = quote;
+  });
 }
 
 /**
@@ -55,3 +46,21 @@ function randomizeImage() {
   imageContainer.appendChild(imgElement);
 }
 
+/**
+ * Fetches comments from the servers and adds them to the DOM.
+ */
+function getComments() {
+    comments = fetch('/comment').then(response => response.json()).then((comments) => {
+        for(index = 0; index < comments.length; index++) {
+            const commentElement = document.getElementById("comment-container");
+            commentElement.appendChild(createListElement(comments[index]));
+        }
+    });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(comment) {
+  const liElement = document.createElement('li');
+  liElement.innerText = comment;
+  return liElement;
+}

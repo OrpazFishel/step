@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Leave a comment below</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body onload="getComments()">
+    <div id="content">
+      <h3>Leave a comment below:</h3>
+      <form action="/comment" method="POST">
+        <label for="name">Please enter your name:</label><br>
+        <input type="text" id="name" name="name" value=""><br>
+        <label for="comment">Please enter your comment:</label><br>
+        <textarea name="comment"></textarea>
+        <br/><br/>
+        <input type="submit" />
+      </form>
+    <ul id="comment-container"></ul>
+    </div>
+  </body>
+</html>
