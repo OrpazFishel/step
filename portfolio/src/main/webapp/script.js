@@ -15,7 +15,6 @@
 /**
  * Adds a random fact about myself to the page.
  */
-
 function getRandomFact() {
     fetch('/data').then(response => response.text()).then((quote) => {
     document.getElementById('fact-container').innerText = quote;
@@ -47,7 +46,10 @@ function randomizeImage() {
   imageContainer.appendChild(imgElement);
 }
 
-function getRandomComment() {
+/**
+ * Fetches comments from the servers and adds them to the DOM.
+ */
+function getComments() {
     comments = fetch('/comment').then(response => response.json()).then((comments) => {
         for(index = 0; index < comments.length; index++) {
             const commentElement = document.getElementById("comment-container");
@@ -56,6 +58,7 @@ function getRandomComment() {
     });
 }
 
+/** Creates an <li> element containing text. */
 function createListElement(comment) {
   const liElement = document.createElement('li');
   liElement.innerText = comment;
