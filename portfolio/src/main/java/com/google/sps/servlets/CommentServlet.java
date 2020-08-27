@@ -45,7 +45,7 @@ public class CommentServlet extends HttpServlet {
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
             String name = (String) entity.getProperty("name");
-            String text = (String) entity.getProperty("comment");
+            String text = (String) entity.getProperty("text");
 
             Comment comment = new Comment(id, name, text);
             comments.add(comment);
