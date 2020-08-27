@@ -17,7 +17,11 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +33,24 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that handle comments data. */
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
-  private List<String> comments = new ArrayList<>();
   private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Load the comments from the Datastore.
+        Query query = new Query("Comment");
+        PreparedQuery results = datastore.prepare(query);
+        
+        List<Comment> comments = new ArrayList<>();
+        for (Entity entity : results.asIterable()) {
+            long id = entity.getKey().getId();
+            String name = (String) entity.getProperty("name");
+            String text = (String) entity.getProperty("comment");
+
+            Comment comment = new Comment(id, name, text);
+            comments.add(comment);
+        }
+
         Gson gson = new Gson();
         String jsonComment = gson.toJson(comments);
 
@@ -48,7 +65,7 @@ public class CommentServlet extends HttpServlet {
     String text = getParameter(request, "comment", "");
 
     // Respond with the result.
-    Entity commentEntity = new Entity("comment");
+    Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("text", text);
 
