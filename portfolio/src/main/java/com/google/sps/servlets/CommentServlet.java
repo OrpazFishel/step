@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
   private List<String> comments = new ArrayList<>();
+  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,10 +45,15 @@ public class CommentServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String name = getParameter(request, "name", "");
-    String comment = getParameter(request, "comment", "");
+    String text = getParameter(request, "comment", "");
 
     // Respond with the result.
-    comments.add(name + ":\n" + comment);
+    Entity commentEntity = new Entity("comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("text", text);
+
+    //Store the data.
+    datastore.put(commentEntity);
     // Redirect back to the HTML page.
     response.sendRedirect("/comments.html");
   }
