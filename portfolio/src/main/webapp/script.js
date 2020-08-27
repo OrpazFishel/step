@@ -50,8 +50,10 @@ function randomizeImage() {
  * Fetches comments from the servers and adds them to the DOM.
  */
 function getComments() {
-    fetch('/comment').then(response => response.json()).then((comments) => {
+    var limit = document.getElementById("limit").value;
+    fetch('/comment?limit=' + limit).then(response => response.json()).then((comments) => {
         const commentElement = document.getElementById("comment-container");
+        commentElement.innerHTML = "";
         comments.forEach((comment) => {
             commentElement.appendChild(createListElement(comment));
         })

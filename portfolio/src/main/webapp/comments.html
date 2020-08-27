@@ -15,8 +15,13 @@
         <label for="comment">Please enter your comment:</label><br>
         <textarea name="comment"></textarea>
         <br/><br/>
-        <input type="submit" />
+        <input type="submit"/>
+        <br/><br/>
       </form>
+    <form action="#" onchange="getComments()">
+        <label for="number">Choose the number of comments (between 1 and 10):</label>
+        <input type="number" id="limit" name="limit" min="1" max="10" value="5">
+    </form>
     <ul id="comment-container"></ul>
     </div>
   </body>
