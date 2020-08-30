@@ -14,7 +14,14 @@
 
 package com.google.sps.servlets;
 
-import com.google.common.collect.ImmutableList; 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +31,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some hard-coded facts. */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
-  private List<String> facts;
-
-  @Override
-  public void init() {
-    /*Hard-coded list of facts*/
-    facts = ImmutableList.of("I'm one of a triplet - and we are all females",
-                             "My big brothers are twins",
-                             "The names of my entire family start with 'א'",
-                             "I have played handball for 8 years, 13 games seasons");
- }
+/** Servlet that delete all the comments. */
+@WebServlet("/delete-comments")
+public class DeleteServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String fact = facts.get((int) (Math.random() * facts.size()));
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Comment");
+    PreparedQuery results = datastore.prepare(query);
 
-    response.setContentType("text/plain; charset=UTF-8");
-    response.getWriter().println(fact);
+        // Delete one comment at a time
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
+      Key commentKey = KeyFactory.createKey("Comment", id);
+      datastore.delete(commentKey);
+      }
   }
 }

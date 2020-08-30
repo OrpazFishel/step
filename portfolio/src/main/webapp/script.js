@@ -46,21 +46,28 @@ function randomizeImage() {
   imageContainer.appendChild(imgElement);
 }
 
-/**
- * Fetches comments from the servers and adds them to the DOM.
- */
-function getComments() {
-    comments = fetch('/comment').then(response => response.json()).then((comments) => {
-        for(index = 0; index < comments.length; index++) {
-            const commentElement = document.getElementById("comment-container");
-            commentElement.appendChild(createListElement(comments[index]));
-        }
+/** Fetches comments from the servers and adds them to the DOM. */
+function displayComments() {
+  var limit = document.getElementById("limit").value;
+  fetch('/comment?limit=' + limit).then(response => response.json()).then((comments) => {
+    const commentElement = document.getElementById("comment-container");
+    commentElement.innerHTML = "";
+    comments.forEach((comment) => {
+      commentElement.appendChild(createListElement(comment));
+      })
     });
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = comment;
+  liElement.innerText = comment.name + ": " + comment.text;
   return liElement;
+}
+
+/** Delete all the comments. */
+function deleteComments() {
+  fetch('/delete-comments');
+  const commentElement = document.getElementById("comment-container");
+  commentElement.innerHTML= "";
 }
