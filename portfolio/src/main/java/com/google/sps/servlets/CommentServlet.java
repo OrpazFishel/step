@@ -79,7 +79,6 @@ public class CommentServlet extends HttpServlet {
     commentEntity.setProperty("text", text);
     commentEntity.setProperty("timestamp", timestamp);
 
-
     //Store the data.
     datastore.put(commentEntity);
     // Redirect back to the HTML page.

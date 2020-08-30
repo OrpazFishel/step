@@ -67,3 +67,10 @@ function createListElement(comment) {
   liElement.innerText = comment.name + ": " + comment.text;
   return liElement;
 }
+
+/** Delete all the comments. */
+function deleteComments() {
+    fetch('/delete-comments');
+    const commentElement = document.getElementById("comment-container");
+    commentElement.innerHTML= "";
+}
