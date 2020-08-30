@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getComments()">
+  <body onload="displayComments()">
     <div id="content">
       <h3>Leave a comment below:</h3>
       <form action="/comment" method="POST">
@@ -18,7 +18,7 @@
         <input type="submit"/>
         <br/><br/>
       </form>
-    <form action="#" onchange="getComments()">
+    <form action="#" onchange="displayComments()">
         <label for="number">Choose the number of comments (between 1 and 10):</label>
         <input type="number" id="limit" name="limit" min="1" max="10" value="5">
     </form>

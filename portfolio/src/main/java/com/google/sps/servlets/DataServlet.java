@@ -24,23 +24,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. */
+/** Servlet that returns some hard-coded facts. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private List<String> facts;
 
   @Override
   public void init() {
-      /*Hard-coded list of facts*/
-      facts = ImmutableList.of("I'm one of a triplet - and we are all females",
-                               "My big brothers are twins",
-                               "The names of my entire family start with 'א'",
-                               "I have played handball for 8 years, 13 games seasons");
+    /*Hard-coded list of facts*/
+    facts = ImmutableList.of("I'm one of a triplet - and we are all females",
+                             "My big brothers are twins",
+                             "The names of my entire family start with 'א'",
+                             "I have played handball for 8 years, 13 games seasons");
  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String fact = facts.get((int) (Math.random() * facts.size()));
+    String fact = facts.get((int) (Math.random() * facts.size()));
 
     response.setContentType("text/plain; charset=UTF-8");
     response.getWriter().println(fact);

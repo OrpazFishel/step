@@ -22,7 +22,6 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,23 +31,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 /** Servlet that delete all the comments. */
 @WebServlet("/delete-comments")
 public class DeleteServlet extends HttpServlet {
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Query query = new Query("Comment");
-        PreparedQuery results = datastore.prepare(query);
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Comment");
+    PreparedQuery results = datastore.prepare(query);
 
         // Delete one comment at a time
-        for (Entity entity : results.asIterable()) {
-            long id = entity.getKey().getId();
-            Key commentKey = KeyFactory.createKey("Comment", id);
-            datastore.delete(commentKey);
-        }
-    }
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
+      Key commentKey = KeyFactory.createKey("Comment", id);
+      datastore.delete(commentKey);
+      }
+  }
 }
