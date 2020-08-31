@@ -15,7 +15,7 @@
 /**
  * Adds a random fact about myself to the page.
  */
-function getRandomFact() {
+function displayRandomFact() {
     fetch('/data').then(response => response.text()).then((quote) => {
     document.getElementById('fact-container').innerText = quote;
   });

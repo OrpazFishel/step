@@ -41,11 +41,11 @@ public class DeleteServlet extends HttpServlet {
     Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
 
-        // Delete one comment at a time
+    // Delete one comment at a time
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
       Key commentKey = KeyFactory.createKey("Comment", id);
       datastore.delete(commentKey);
-      }
+    }
   }
 }
