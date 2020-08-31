@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Orpaz's Favorites Books</title>
     <link rel="stylesheet" href="style.css">
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script src="script.js"></script>
   </head>
   <body>
@@ -12,6 +14,21 @@
       <p>Click here to get a random picture of a wonderful fantasy book:</p>
       <button onclick="randomizeImage()">book</button>
       <div id="random-image-container"></div>
+    </div>
+    <div id="chart-container"> </div>
+    <div id="select-button">
+      <h2>Vote</h2>
+      <form action="/book-data" method="POST">
+        <select name="book">
+          <option value="Assassin's Apprentice">Assassin's Apprentice</option>
+          <option value="Elantris">Elantris</option>
+          <option value="Game of Thrones">Game of Thrones</option>
+          <option value="Graceling">Graceling</option>
+          <option value="The Name of the Wind">The Name of the Wind</option>
+          <option value="The Way of Kings">The Way of Kings</option>
+        </select>
+        <button>Submit</button>
+      </form>
     </div>
   </body>
 </html>

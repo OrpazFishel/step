@@ -71,3 +71,29 @@ function deleteComments() {
   const commentElement = document.getElementById("comment-container");
   commentElement.innerHTML= "";
 }
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+/** Fetches book data and uses it to create a chart. */
+function drawChart() {
+  fetch('/book-data').then(response => response.json())
+  .then((bookVotes) => {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Book');
+    data.addColumn('number', 'Votes');
+    Object.keys(bookVotes).forEach((book) => {
+      data.addRow([book, bookVotes[book]]);
+    });
+
+    const options = {
+      'title': 'Favorite Books',
+      'width':600,
+      'height':500
+    };
+
+    const chart = new google.visualization.PieChart(
+        document.getElementById('chart-container'));
+    chart.draw(data, options);
+  });
+}
