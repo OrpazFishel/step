@@ -86,14 +86,11 @@ function drawChart() {
       data.addRow([book, bookVotes[book]]);
     });
 
-    const options = {
-      'title': 'Favorite Books',
-      'width':600,
-      'height':500
-    };
 
     const chart = new google.visualization.PieChart(
         document.getElementById('chart-container'));
-    chart.draw(data, options);
+    chart.draw(data, {'title': 'Favorite Books',
+                      'width':600,
+                      'height':500});
   });
 }

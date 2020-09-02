@@ -14,6 +14,15 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,11 +35,17 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that handle survey's data. Store the votes or load them. */
 @WebServlet("/book-data")
 public class BookDataServlet extends HttpServlet {
-
-  private Map<String, Integer> bookVotes = new HashMap<>();
+  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Map<String, Long> bookVotes = new HashMap<>();
+    Query query = new Query("BookVotes");
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+      bookVotes.put((String) entity.getProperty("name"), (long)entity.getProperty("votes"));
+    }
+
     response.setContentType("application/json");
     Gson gson = new Gson();
     String json = gson.toJson(bookVotes);
@@ -40,9 +55,29 @@ public class BookDataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String book = request.getParameter("book");
-    int currentVotes = bookVotes.containsKey(book) ? bookVotes.get(book) : 0;
-    bookVotes.put(book, currentVotes + 1);
+    long currentVotes = 1;
 
+    Query query = new Query("BookVotes");
+    PreparedQuery results = datastore.prepare(query);
+
+    // Search if the book is already in the list
+    for (Entity entity : results.asIterable()) {
+      if (((String) entity.getProperty("name")).equals(book)) {
+        currentVotes += (long)entity.getProperty("votes");
+        long id = entity.getKey().getId();
+        Key bookKey = KeyFactory.createKey("BookVotes", id);
+        datastore.delete(bookKey);
+      }
+    }
+
+    // Respond with the result.
+    Entity bookVotesEntity = new Entity("BookVotes");
+    bookVotesEntity.setProperty("name", book);
+    bookVotesEntity.setProperty("votes", currentVotes);
+    // Store the data.
+    datastore.put(bookVotesEntity);
+
+    // Redirect back to the HTML page.
     response.sendRedirect("/randomBook.html");
   }
 }
