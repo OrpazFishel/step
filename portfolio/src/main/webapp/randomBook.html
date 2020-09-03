@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <title>Orpaz's Favorites Books</title>
     <link rel="stylesheet" href="style.css">
+      <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="createSurveyOptions()">
     <div id="content">
       <h1>Orpaz's Favorites Books</h1>
       <p>Click here to get a random picture of a wonderful fantasy book:</p>
       <button onclick="randomizeImage()">book</button>
       <div id="random-image-container"></div>
+    </div>
+    <div id="chart-container"> </div>
+    <div id="select-button">
+      <h2>Vote</h2>
+      <form action="/book-data" method="POST">
+        <select name="book"></select>
+        <button>Submit</button>
+      </form>
     </div>
   </body>
 </html>

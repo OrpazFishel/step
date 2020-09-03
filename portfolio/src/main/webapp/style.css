@@ -6,6 +6,21 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+#chart-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+  background-color: Lavender;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#select-button {
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+  background-color: Lavender;
+}
+
 h1 {
     text-align: center;
     background-color: Lavender;
@@ -24,4 +39,12 @@ img {
 
 #random-image-container img {
   margin-top: 20px;
+}
+
+#map {
+  margin-left: auto;
+  margin-right: auto;
+  border: thin solid black;
+  height: 500px;
+  width: 500px;
 }
