@@ -22,6 +22,8 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -57,10 +59,9 @@ public class BookDataServlet extends HttpServlet {
     String book = request.getParameter("book");
     long currentVotes = 1;
 
-    Query query = new Query("BookVotes");
-    PreparedQuery results = datastore.prepare(query);
-
     // Search if the book is already in the list
+    Query query = new Query("BookVotes").setFilter(new FilterPredicate("name", FilterOperator.EQUAL, book));
+    PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
       if (((String) entity.getProperty("name")).equals(book)) {
         currentVotes += (long)entity.getProperty("votes");

@@ -123,5 +123,4 @@ function createMap() {
                 Savyon: {lat: 32.0456, lng: 34.8766},
                 Arad: {lat: 31.275165566, lng: 35.12166618}};
   Object.values(cities).forEach(location => new google.maps.Marker({position: location, map: map}));
-  //var marker = new google.maps.Marker({position: cities.Jerusalem, map: map});
 }
