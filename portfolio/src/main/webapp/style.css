@@ -42,6 +42,8 @@ img {
 }
 
 #map {
+  margin-left: auto;
+  margin-right: auto;
   border: thin solid black;
   height: 500px;
   width: 500px;

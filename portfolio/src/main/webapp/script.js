@@ -107,4 +107,21 @@ function createMap() {
   const map = new google.maps.Map(
       document.getElementById('map'),
       {center: {lat: 31.771959, lng: 35.217018}, zoom: 7});
+  
+  // Cities where I had games
+  var cities = {TelAviv: {lat: 32.109333, lng: 34.855499},
+                Ashdod: {lat: 31.801447, lng: 34.643497},
+                Herzliya: {lat: 32.166313, lng: 34.843311},
+                Eilat: {lat: 29.55805, lng: 34.94821},
+                Holon: {lat: 32.01034, lng: 34.77918},
+                Netanya: {lat: 32.33291, lng: 34.85992},
+                PetahTiqwa: {lat: 32.08707, lng: 34.88747},
+                RamatGan: {lat: 32.08227, lng: 34.81065},
+                RishonLeziyyon: {lat: 31.97102, lng: 34.78939},
+                KiryayOno: {lat: 32.0549, lng: 34.8589},
+                NessZiona: {lat: 31.9321, lng: 34.8013},
+                Savyon: {lat: 32.0456, lng: 34.8766},
+                Arad: {lat: 31.275165566, lng: 35.12166618}};
+  Object.values(cities).forEach(location => new google.maps.Marker({position: location, map: map}));
+  //var marker = new google.maps.Marker({position: cities.Jerusalem, map: map});
 }
