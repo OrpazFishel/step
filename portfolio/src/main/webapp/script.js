@@ -101,3 +101,10 @@ function drawChart() {
                       'height':500});
   });
 }
+
+/** Creates a map and adds it to the page. */
+function createMap() {
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 31.771959, lng: 35.217018}, zoom: 7});
+}
