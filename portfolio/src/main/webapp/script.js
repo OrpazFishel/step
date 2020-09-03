@@ -12,6 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+const books = ["Assassin's Apprentice", 
+               "Elantris",
+               "Game of Thrones",
+               "Graceling",
+               "The Name of the Wind",
+               "The Way of Kings"];
+
 /**
  * Adds a random fact about myself to the page.
  */
@@ -26,16 +33,8 @@ function displayRandomFact() {
  * element with that URL to the page.
  */
 function randomizeImage() {
-  const images =
-      ["/images/assassin'sApprentice.jpg", 
-      "/images/elantris.jpg",
-      "/images/gameOfThrones.jpg",
-      "/images/graceling.jpg",
-      "/images/theNameOfTheWind.jpg",
-      "/images/theWayOfKings.jpg"];
-
-  const imageIndex = Math.floor(Math.random() * images.length); 
-  const imgUrl = images[imageIndex];
+  const imageIndex = Math.floor(Math.random() * books.length); 
+  const imgUrl = "/images/" + books[imageIndex] + ".jpg";
 
   const imgElement = document.createElement('img');
   imgElement.src = imgUrl;
@@ -44,6 +43,14 @@ function randomizeImage() {
   // Remove the previous image.
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
+}
+
+/** Generates the options of the survey.*/
+function createSurveyOptions() {
+  const optionsContainer = document.getElementsByName('book')[0];
+  books.forEach(bookName => {
+    optionsContainer.appendChild(new Option(bookName, bookName))
+  });
 }
 
 /** Fetches comments from the servers and adds them to the DOM. */
