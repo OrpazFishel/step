@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-/** */
+
 @RunWith(JUnit4.class)
 public final class FindMeetingQueryTest {
   private static final Collection<Event> NO_EVENTS = Collections.emptySet();
@@ -123,9 +123,9 @@ public final class FindMeetingQueryTest {
   }
 
   @Test
-  public void optionalAttendeeIsNotConsidered() {
-    // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
+  public void optionalAttendeeHasNotEnoughRoom() {
+    // Each person have different events. We should see two options because each 
+    // mandatory attendee splits the restricted times. The optional attendee has no time. 
     //
     // Optionals: |--------------C--------------|
     // Events   :       |--A--|     |--B--|
@@ -144,18 +144,17 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_C);
 
     Collection<TimeRange> actual = query.query(events, request);
+
     Collection<TimeRange> expected =
         Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
             TimeRange.fromStartEnd(TIME_0830AM, TIME_0900AM, false),
             TimeRange.fromStartEnd(TIME_0930AM, TimeRange.END_OF_DAY, true));
-
     Assert.assertEquals(expected, actual);
   }
 
   @Test
   public void optionalAttendeeIsConsidered() {
-    // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
+    // Each person have different events. We should see two options.
     //
     // Optionals:             |--C--|
     // Events   :       |--A--|     |--B--|
@@ -175,10 +174,10 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_C);
 
     Collection<TimeRange> actual = query.query(events, request);
+
     Collection<TimeRange> expected =
         Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
             TimeRange.fromStartEnd(TIME_0930AM, TimeRange.END_OF_DAY, true));
-
     Assert.assertEquals(expected, actual);
   }
 
@@ -306,9 +305,9 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_B);
 
     Collection<TimeRange> actual = query.query(events, request);
+
     Collection<TimeRange> expected =
         Arrays.asList(TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES));
-
     Assert.assertEquals(expected, actual);
   }
 
@@ -362,7 +361,7 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalAttendeesOnly() {
-    // Have each person have different events. We should see two options because each person has
+    // Have each person have different events. We should see three options because each person has
     // split the restricted times.
     //
     // Optional:       |--A--|     |--B--|
@@ -381,20 +380,19 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_A);
     request.addOptionalAttendee(PERSON_B);
 
-
     Collection<TimeRange> actual = query.query(events, request);
+
     Collection<TimeRange> expected =
         Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
             TimeRange.fromStartEnd(TIME_0830AM, TIME_0900AM, false),
             TimeRange.fromStartEnd(TIME_0930AM, TimeRange.END_OF_DAY, true));
-
     Assert.assertEquals(expected, actual);
   }
 
   @Test
   public void notEnoughRoomForOptionalAttendees() {
-    // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
+    // The two optional attendees have meetings and have no time to meet,
+    // so the meeting is with the manadtory attendees only, and there are none.
     //
     // Optional: |------A-----|  |------B------|
     // Events  :
@@ -411,10 +409,9 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_A);
     request.addOptionalAttendee(PERSON_B);
 
-
     Collection<TimeRange> actual = query.query(events, request);
-    Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
 
+    Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
     Assert.assertEquals(expected, actual);
   }
 }
