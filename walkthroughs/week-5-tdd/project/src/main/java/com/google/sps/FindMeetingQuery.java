@@ -22,16 +22,26 @@ import java.util.HashSet;
 
 
 public final class FindMeetingQuery {
-  /**Return all possible time intervals for a meeting, according to its attendees' events.*/
+  /**Return all possible time intervals for a meeting, taking into account the optional attendees, 
+   if it's possible, otherwise return all the possible time intervals without them.*/
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    ArrayList<TimeRange> meetings = findOptionalTimeForMeeting(events, request);
-    return meetings;
+    ArrayList<TimeRange> meetingsWithOptional = findOptionalTimeForMeeting(events, request, true);
+    if (!meetingsWithOptional.isEmpty()) {
+        return meetingsWithOptional;
+    }
+    return findOptionalTimeForMeeting(events, request, false);
   }
 
   /**Return all possible time intervals for a meeting, according to its attendees' events.*/
-  private ArrayList<TimeRange> findOptionalTimeForMeeting(Collection<Event> events, MeetingRequest request) {
+  private ArrayList<TimeRange> findOptionalTimeForMeeting(Collection<Event> events, MeetingRequest request, boolean withOptional) {
+    Collection<String> allAttendees = new HashSet<String>();
+    allAttendees.addAll(request.getAttendees());
+    if (withOptional) {
+      allAttendees.addAll(request.getOptionalAttendees());
+    }
+    ArrayList<TimeRange> sortedTimeRanges = filterOutIrrelevantMeetings(events, allAttendees);
+    
     ArrayList<TimeRange> meetings = new ArrayList<TimeRange>();
-    ArrayList<TimeRange> sortedTimeRanges = filterOutIrrelevantMeetings(events, request.getAttendees());
     int start = TimeRange.START_OF_DAY;
     int end;
 
