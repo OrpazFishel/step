@@ -19,9 +19,9 @@ package com.google.sps;
  */
 public class Greeter {
   /**
-   * Returns a greeting for the given name.
+   * Returns a greeting for the given name, after removing spaces and special characters.
    */
   public String greet(String name) {
-    return "Hello " + name;
+    return "Hello " + name.trim().replaceAll("[^a-zA-Z0-9!?,.:]", "");
   }
 }

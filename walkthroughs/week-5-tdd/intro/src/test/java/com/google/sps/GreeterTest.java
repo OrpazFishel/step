@@ -14,6 +14,9 @@
 
 package com.google.sps;
 
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +31,33 @@ public final class GreeterTest {
 
     String greeting = greeter.greet("Ada");
 
-    Assert.assertEquals("Hello Ada", greeting);
+    assertThat(greeting).isEqualTo("Hello Ada");
+  }
+
+  @Test
+  public void testGreetingTrimsWhitespace() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet("   Ada   ");
+
+    assertThat(greeting).isEqualTo("Hello Ada");
+  }
+
+  @Test
+  public void testGreetingRemoveSpecialChars() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet(" @A&d%a$  ");
+
+    assertThat(greeting).isEqualTo("Hello Ada");
+  }
+
+  @Test
+  public void testGreetingRemoveOtherLanguage() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet("آداAdaעדה");
+
+    assertThat(greeting).isEqualTo("Hello Ada");
   }
 }
