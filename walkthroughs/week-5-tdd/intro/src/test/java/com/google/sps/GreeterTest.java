@@ -40,7 +40,6 @@ public final class GreeterTest {
 
     String greeting = greeter.greet("   Ada   ");
 
-    // Whitespace should be trimmed
     assertThat(greeting).isEqualTo("Hello Ada");
   }
 
@@ -50,7 +49,6 @@ public final class GreeterTest {
 
     String greeting = greeter.greet(" @A&d%a$  ");
 
-    // Special characters should be removed
     assertThat(greeting).isEqualTo("Hello Ada");
   }
 
@@ -60,7 +58,6 @@ public final class GreeterTest {
 
     String greeting = greeter.greet("آداAdaעדה");
 
-    // Characters ot other languages should be removed
     assertThat(greeting).isEqualTo("Hello Ada");
   }
 }
