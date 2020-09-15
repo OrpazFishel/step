@@ -31,7 +31,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void init() {
-    /*Hard-coded list of facts*/
+    /* Hard-coded list of facts */
     facts = ImmutableList.of("I'm one of a triplet - and we are all females",
                              "My big brothers are twins",
                              "The names of my entire family start with 'א'",
